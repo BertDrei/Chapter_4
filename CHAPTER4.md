@@ -8,103 +8,100 @@ application. The discussions are supported by empirical evidence derived
 from model performance metrics, feature importance analysis, and user
 experience evaluation.
 
----\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--
-To be reviewed
----\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--
-
-**Education Distribution**
-
-Analysis of education levels revealed that Bachelor\'s degrees were the
-most common (35.6%), followed by High School (23.7%) and Associate\'s
-degrees (18.7%). Advanced degrees like PhD were relatively rare
-(0.3%).![A graph of a number of people AI-generated content may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image4.png){width="4.255208880139983in"
-height="2.8399507874015746in"}
-
-**Experience Distribution**
-
-The distribution of years of experience showed a right-skewed pattern,
-with most individuals having between 0-10 years of experience. The mean
-experience was 6.3 years, with a standard deviation of 6.7 years.
-
-![A graph of a distribution of years AI-generated content may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image7.png){width="4.695282152230972in"
-height="3.13in"}
-
-**Skills Distribution**
-
-The most common skills in the dataset were problem-solving, time
-management, and communication, each present in over 40% of the resumes.
-Technical skills like machine learning, programming, and data analysis
-were present in approximately 15-16% of resumes.![A graph of skills
-distribution AI-generated content may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image1.png){width="4.641509186351706in"
-height="3.315444006999125in"}
-
-**Job Role Distribution**
-
-The dataset contained 639 unique job roles, with a relatively balanced
-distribution. The most common roles included Marine scientist, technical
-author, and Pathologist, each representing less than 0.2% of the
-dataset![A graph with text and numbers AI-generated content may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image10.png){width="4.201429352580927in"
-height="3.0031878827646543in"}
-
-**Relationships Between Features**
-
-**Education vs. Job Role**
-
-Analysis revealed strong relationships between education levels and job
-roles. For example, Professional Degrees were strongly associated with
-healthcare roles like Pathologist and Child psychotherapist, while PhDs
-were more common in research and academic positions.![A graph of
-different colored squares AI-generated content may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image3.png){width="4.867924321959755in"
-height="3.245087489063867in"}
-
-**Experience vs. Job Role**
-
-Years of experience varied significantly across job roles. Senior
-positions like Chief Financial Officer showed higher average years of
-experience, while entry-level positions had lower levels.
-
-![A graph with blue squares AI-generated content may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image6.png){width="3.7343755468066493in"
-height="2.6645800524934384in"}
-
-**Skills vs. Job Role**
-
-The heatmap analysis of skills across job roles revealed distinct skill
-patterns for different career paths. Technical roles showed higher
-prevalence of programming and data analysis skills, while management
-positions had higher rates of leadership and strategic planning skills.
-
----\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--\[end\]\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--
-
 ## **Employment Trends and Skill Demands Through Data Preprocessing**
 
-### **Dataset Characteristics and Composition.** The study utilized the Professional Profiles dataset from Hugging Face, which provided a robust foundation for the analysis. This dataset contained 76,294 profiles with four primary data columns: education level, skills, experience, and current job role. Initial exploratory analysis revealed 639 unique job roles and 34 distinct skills across the dataset. The education distribution showed that Bachelor's degrees were the most common qualification at 35.6%, followed by High School diplomas (23.7%) and Associate's degrees (18.7%). Advanced degrees such as PhDs represented only a small fraction (0.3%) of the overall dataset.
+To effectively identify employment trends and evolving skill demands,
+detailed data preprocessing steps were undertaken to ensure the
+consistency and quality of the professional profiles dataset. The
+research utilized the Professional Profiles dataset from Hugging Face, a
+comprehensive collection comprising 76,294 profiles. Each profile
+initially contained four primary data columns: education level, skills,
+experience, and current job role. An initial exploratory analysis of
+this raw data revealed a diverse landscape with 639 unique job roles and
+34 distinct skills distributed across the dataset.
 
-The distribution of professional experience demonstrated a right-skewed
-pattern, with the majority of individuals possessing between 0-10 years
-of experience. The calculated mean experience was 6.3 years with a
-standard deviation of 6.7 years, indicating considerable variability in
-professional tenure across the dataset. Analysis showed that 80.2% of
-entries had some experience, with an average of 1.3 previous jobs per
-individual.
+A comprehensive preprocessing pipeline was subsequently implemented to
+transform this raw data into structured features suitable for machine
+learning analysis. The \'education level\' data underwent ordinal
+encoding to accurately capture the hierarchical nature of academic
+qualifications, with values assigned from 1 (High School) to 6
+(Professional Degree). This method preserved the inherent progression of
+educational attainment while converting categorical information into a
+numerical format. The \'skills\' column, originally consisting of
+comma-separated text values, was transformed into a set of binary
+features, where \'1\' indicated the presence and \'0\' the absence of
+each unique skill identified in the dataset. This vectorization approach
+enabled the model to learn the importance of specific skills. For the
+\'experience\' field, which contained unstructured text descriptions,
+several meaningful numerical features were extracted using text analysis
+techniques; these included total years of experience, a binary indicator
+for any prior experience, and the count of previous jobs mentioned.
+Finally, the target variable, \'current job role,\' was subjected to
+label encoding, transforming the 639 unique textual values into numeric
+indices essential for model training, while a mapping file was
+maintained to ensure the interpretability of the results.
 
-In terms of skills distribution, problem-solving (43.4%), time
-management (43.2%), and communication (43.2%) emerged as the three most
-prevalent skills in the dataset. Technical skills such as machine
-learning, programming, and data analysis appeared in approximately
-15-16% of profiles, reflecting their specialized nature in the current
-professional landscape.
+### **Dataset Characteristics and Composition.** The study utilized the Professional Profiles dataset from Hugging Face, which provided a robust foundation for the analysis. 
 
-[Figure 4.1 illustrates the distribution of education levels across the
-dataset, highlighting the predominance of undergraduate
-qualifications.]{.mark}
+### Education Distribution. **T**his dataset contained 76,294 profiles with four primary data columns: education level, skills, experience, and current job role. Initial exploratory analysis revealed 639 unique job roles and 34 distinct skills across the dataset. Analysis of education levels revealed that Bachelor\'s degrees were the most common (35.6%), followed by High School (23.7%) and Associate\'s degrees (18.7%). Advanced degrees like PhD were relatively rare (0.3%)
 
-[\[Figure 4.1: Education Level Distribution across the Dataset\]]{.mark}
+![A graph of a number of people AI-generated content may be
+incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image5.png){width="4.255208880139983in"
+height="2.8399507874015746in"}
+
+Experience Distribution. The distribution of professional experience
+demonstrated a right-skewed pattern, with the majority of individuals
+possessing between 0-10 years of experience. The calculated mean
+experience was 6.3 years with a standard deviation of 6.7 years,
+indicating considerable variability in professional tenure across the
+dataset. Analysis showed that 80.2% of entries had some experience, with
+an average of 1.3 previous jobs per individual.![A graph of a
+distribution of years AI-generated content may be
+incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image6.png){width="4.401042213473316in"
+height="2.9234733158355204in"}
+
+Skill distribution. In terms of skills distribution, problem-solving
+(43.4%), time management (43.2%), and communication (43.2%) emerged as
+the three most prevalent skills in the dataset. The most common skills
+in the dataset were problem-solving, time management, and communication,
+each present in over 40% of the resumes. Technical skills like machine
+learning, programming, and data analysis were present in approximately
+15-16% of resumes.![A graph of skills distribution AI-generated content
+may be
+incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image3.png){width="4.197916666666667in"
+height="2.985411198600175in"}
+
+Job Role Distribution. The dataset contained 639 unique job roles, with
+a relatively balanced distribution. The most common roles included
+Marine scientist, technical author, and Pathologist, each representing
+less than 0.2% of the dataset![A graph with text and numbers
+AI-generated content may be
+incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image1.png){width="3.901042213473316in"
+height="2.7878412073490813in"}
+
+Education vs. Job Role. Analysis revealed strong relationships between
+education levels and job roles. For example, Professional Degrees were
+strongly associated with healthcare roles like Pathologist and Child
+psychotherapist, while PhDs were more common in research and academic
+positions.![A graph of different colored squares AI-generated content
+may be
+incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image2.png){width="4.867924321959755in"
+height="3.245087489063867in"}
+
+Experience vs. Job Role. Years of experience varied significantly across
+job roles. Senior positions like Chief Financial Officer showed higher
+average years of experience, while entry-level positions had lower
+levels.
+
+![A graph with blue squares AI-generated content may be
+incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image8.png){width="3.7343755468066493in"
+height="2.6645800524934384in"}
+
+Skills vs. Job Role. The heatmap analysis of skills across job roles
+revealed distinct skill patterns for different career paths. Technical
+roles showed higher prevalence of programming and data analysis skills,
+while management positions had higher rates of leadership and strategic
+planning skills.
 
 ### **Data Preprocessing and Feature Engineering.** A comprehensive preprocessing pipeline was implemented to transform the raw dataset into structured features suitable for machine learning analysis. The education data underwent ordinal encoding to capture the hierarchical nature of academic qualifications, with values ranging from 1 (High School) to 6 (Professional Degree). This approach preserved the inherent progression of educational attainment while converting categorical information into numerical values for model training.
 
@@ -148,7 +145,7 @@ levels during preprocessing.
   Professional Degree                 6
   -----------------------------------------------------------------------
 
-### **Identified Employment Trends.** The analysis of relationships between features revealed significant patterns in the employment landscape. A strong correlation was observed between education levels and specific job roles, with Professional Degrees strongly associated with healthcare positions such as Pathologist and Child Psychotherapist, while PhDs demonstrated a higher prevalence in research and academic positions. This finding aligns with specialized knowledge requirements in these fields and their corresponding formal qualification prerequisites.
+### **Relationships Between Features Findings.** The analysis of relationships between features revealed significant patterns in the employment landscape. A strong correlation was observed between education levels and specific job roles, with Professional Degrees strongly associated with healthcare positions such as Pathologist and Child Psychotherapist, while PhDs demonstrated a higher prevalence in research and academic positions. This finding aligns with specialized knowledge requirements in these fields and their corresponding formal qualification prerequisites.
 
 Years of experience exhibited notable variation across job roles, with
 senior positions such as Chief Financial Officer showing higher average
@@ -335,7 +332,7 @@ components work in concert to provide a seamless user experience from
 initial profile submission through to the presentation of job role
 predictions and personalized insights.
 
-![](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image9.png){width="5.767716535433071in"
+![](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image7.png){width="5.767716535433071in"
 height="2.7222222222222223in"}
 
 [\[Figure 4.5: Main Application Interface\]]{.mark}
@@ -349,7 +346,7 @@ After extraction, users could review and modify the automatically
 extracted information through an intuitive skill selection interface,
 ensuring accurate profile representation.
 
-![](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image5.png){width="5.59375in"
+![](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image4.png){width="5.59375in"
 height="3.0104166666666665in"}
 
 [\[Figure 4.6: Skill Selection Interface\]]{.mark}
@@ -411,7 +408,7 @@ system was successfully implemented with a Streamlit-based user
 interface, providing an intuitive platform for users to interact with
 the system. Figure 4.1 illustrates the main screen of the application,
 showcasing the clean design and navigational
-elements.![](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image8.png){width="5.384722222222222in"
+elements.![](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image10.png){width="5.384722222222222in"
 height="2.7284722222222224in"}
 
 **Figure n.** *Main Application Interface*
@@ -425,7 +422,7 @@ The implementation included several key interface components:
 2.  **Skill Selection Interface**: After resume parsing, users can
     review automatically extracted skills and manually add, remove, or
     edit skills to ensure their profile is accurately
-    represented.![](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image2.png){width="5.759027777777778in"
+    represented.![](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image9.png){width="5.759027777777778in"
     height="2.8958333333333335in"}
 
 **Figure 4.2** *Skill Selection Interface*
@@ -468,7 +465,7 @@ An example of extracted data visualization is shown in Figure n,
 demonstrating how the system organizes parsed resume information before
 processing.
 
-![](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image5.png){width="6.5in"
+![](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image4.png){width="6.5in"
 height="3.0069444444444446in"}
 
 **Figure 4.4** *Extracted Resume Informatio*
