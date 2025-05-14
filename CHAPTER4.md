@@ -83,144 +83,113 @@ The analysis of relationships between these processed features revealed signific
 
 The data preprocessing and feature engineering phase was thus instrumental in revealing critical insights into employment trends: the hierarchical nature of educational requirements, the importance of experience accumulation for senior positions, and the distinct skill clusters associated with different career domains. These findings provided an essential, data-driven foundation for the subsequent model development and evaluation phases.
 
-## **Evaluation of Employment Opportunities Using Random Forest**
 
-### **Model Training and Hyperparameter Optimization.** The Random Forest classification model was trained on the preprocessed dataset, with 80% of the data allocated for training and 20% reserved for testing. This split ratio provided sufficient data for model learning while maintaining an adequate portion for performance evaluation. Stratified sampling was employed to ensure proportionate representation of job role classes in both training and testing sets, mitigating potential bias from class imbalance.
+### **Identified Relationships Between Features**
+The analysis of relationships between these processed features revealed significant patterns in the employment landscape that are crucial for understanding modern workforce dynamics and informing data-driven career guidance. These relationship patterns provide essential insights into how education, experience, and skills interact to shape career trajectories—information that is vital for both job seekers and organizations seeking to bridge talent gaps. The methodological approach employed correlation analysis, contingency table examination, and visualization techniques such as heatmaps to uncover these multidimensional relationships, moving beyond simple univariate analysis to understand how different career components interact in complex employment ecosystems.
+Understanding these feature relationships addresses a critical gap in contemporary employment research, which has traditionally focused on either education credentials or skill requirements in isolation, rather than examining their intersections and dependencies. By analyzing how these factors co-occur and influence each other across different professional domains, this research contributes to a more holistic understanding of career development pathways and employment determinants. Such knowledge is particularly valuable in the context of rapidly evolving job markets, where traditional career trajectories are being disrupted by technological advancement, remote work adoption, and changing organizational structures.
+The findings from this relationship analysis directly inform three key stakeholder groups: individual job seekers navigating career transitions, educational institutions designing relevant curriculum, and employers seeking to understand talent acquisition patterns. For individual career planning, these insights provide evidence-based guidance on skill development priorities and educational investments that align with desired career paths. For educational institutions, the clear patterns of skill-role associations offer valuable input for curriculum design that reflects actual market demands rather than assumed requirements. For employers and HR professionals, these relationship patterns illuminate potential alternative candidate pools by identifying transferable skill sets across seemingly disparate job categories.
 
-Hyperparameter optimization was conducted using Grid Search
-Cross-Validation to identify the optimal configuration for the model.
-This systematic approach evaluated multiple parameter combinations
-including n_estimators (100, 200), max_depth (None, 10, 20),
-min_samples_split (2, 5), and min_samples_leaf (1, 2). Five-fold
-cross-validation was employed during this process to obtain reliable
-performance estimates for each parameter combination, thereby reducing
-the risk of overfitting to a particular data partition.
+*   **Education vs. Job Role**: A strong correlation was observed between education levels and specific job roles. For example, Professional Degrees were strongly associated with healthcare positions such as Pathologist and Child Psychotherapist, while PhDs demonstrated a higher prevalence in research and academic positions. This finding is significant as it aligns with specialized knowledge requirements in these fields and their corresponding formal qualification prerequisites. The clear education-role mapping highlights the continued importance of targeted academic credentials as gatekeepers for certain professional domains, despite the evolving emphasis on skills-based hiring in other sectors.
+    ![A graph of different colored squares AI-generated content may be incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image2.png){width="4.867924321959755in" height="3.245087489063867in"}
+    *Figure: Education Level vs. Job Role Heatmap*
 
-The optimization process yielded the following optimal hyperparameters:
-n_estimators=200, max_depth=20, min_samples_split=2, and
-min_samples_leaf=1. These settings reflected a balance between model
-complexity and generalization capability, with the relatively high
-number of estimators (200) providing robustness through ensemble
-learning while the controlled depth (20) prevented overfitting to
-training data noise.
+*   **Experience vs. Job Role**: Years of experience exhibited notable variation across job roles, with senior positions such as Chief Financial Officer showing higher average years of experience compared to entry-level positions. This pattern underscores the progressive nature of career advancement in certain fields, where experiential knowledge accumulation directly correlates with higher organizational responsibility. The clear stratification of roles by experience provides valuable insights for career planning and helps explain wage differentials across positions with similar educational requirements but different experience thresholds.
+    ![A graph with blue squares AI-generated content may be incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image8.png){width="3.7343755468066493in" height="2.6645800524934384in"}
+    *Figure: Experience vs. Job Role Heatmap*
 
-Table 4.2 presents the final optimized hyperparameters selected for the
-Random Forest model after grid search cross-validation.
+*   **Skills vs. Job Role**: The heatmap analysis of skills across job roles (as depicted in Figure 4.2) revealed distinct patterns across different career paths. Technical roles demonstrated a higher concentration of programming and data analysis skills, while management positions showed greater prevalence of leadership and strategic planning competencies. This skills differentiation reflects the specialized knowledge domains required in various professional contexts and highlights the importance of targeted skill development for specific career trajectories. Understanding these skill clusters is essential for developing effective upskilling strategies and designing educational programs that align with actual market demands.
+    [Figure 4.2 depicts the relationship between job roles and skill patterns, illustrating the distinct skill requirements across different career domains.]{.mark}
+    [\[Figure 4.2: Heatmap of Skills Distribution Across Job Categories\]]{.mark}
 
-  -----------------------------------------------------------------------
-  **Parameter**                    **Value**
-  -------------------------------- --------------------------------------
-  n_estimators                     200
+The data preprocessing and feature engineering phase was thus instrumental in revealing critical insights into employment trends: the hierarchical nature of educational requirements across professions, the importance of experience accumulation for senior positions, and the distinct skill clusters associated with different career domains. These findings are particularly important because they provide a quantifiable basis for career guidance that goes beyond anecdotal evidence, enabling more precise modeling of employment pathways. They also reveal how the labor market segments into distinct ecosystems with their own progression rules and entry requirements—essential knowledge for both individual career planning and workforce development policy. Additionally, these insights directly informed the feature selection for the subsequent Random Forest model, ensuring that the most relevant predictors were incorporated into the employment opportunity prediction system.
 
-  max_depth                        20
 
-  min_samples_split                2
+# 4.2 Evaluation of Employment Opportunities Using Random Forest
 
-  min_samples_leaf                 1
+The evaluation of the Random Forest model's effectiveness in predicting employment opportunities consisted of comprehensive performance assessment, detailed cross-validation analysis, feature importance evaluation, and thorough interpretation of results. This section presents these findings and their implications for employment opportunity prediction.
 
-  criterion                        gini
-  -----------------------------------------------------------------------
+## 4.2.1 Overall Model Performance Metrics
 
-### **Model Performance Assessment.** The optimized Random Forest model achieved an accuracy of 86.3% on the test dataset, demonstrating strong predictive performance for job role classification. Cross-validation results across five folds showed consistent performance metrics with low standard deviation, indicating model stability and reliable generalization capabilities. The mean precision across folds was 84.9%, with recall at 83.5% and F1-score at 84.2%.
+The optimized Random Forest model demonstrated strong predictive capability, achieving an overall accuracy of 86.3% on the independent test dataset. This performance level indicates the model's effectiveness in correctly classifying job roles based on the engineered features derived from education, skills, and experience data. Beyond the aggregate accuracy measure, the model exhibited balanced performance across precision and recall metrics, which is critical for a multi-class classification problem with 639 distinct job role categories.
 
-Table 4.3 displays the cross-validation results across the five folds,
-highlighting the model's consistent performance.
+The weighted average precision of 84.9% demonstrates the model's ability to avoid false positive classifications—a crucial consideration when providing career recommendations where accuracy of suggestions directly impacts users' career planning decisions. Similarly, the model achieved a weighted average recall of 83.5%, indicating robust capability in identifying relevant job roles across the diverse range of professional categories. The balanced F1-score of 84.2% further confirms that the model maintained equilibrium between precision and recall, without sacrificing one metric for the other.
 
-  ----------------------------------------------------------------------------
-  **Fold**    **Accuracy**      **Precision**   **Recall**     **F1-Score**
-  ----------- ----------------- --------------- -------------- ---------------
-  1           85.9%             84.7%           83.2%          83.9%
+Performance varied notably across different job categories. Technical fields such as IT & Software Development demonstrated superior precision (92.3%) compared to the overall average, while Data Science & Analytics roles achieved 89.7% precision. This variation suggests that technically-oriented positions possess more distinctive feature patterns that facilitate accurate classification, likely due to the more specific and structured nature of technical skills required in these domains.
 
-  2           86.4%             85.1%           83.8%          84.4%
+## 4.2.2 Confusion Matrix Analysis
 
-  3           86.2%             84.3%           83.5%          83.9%
+The confusion matrix analysis revealed important patterns in the model's classification behavior across the 639 job role categories. While the full confusion matrix is too extensive to display in its entirety, several notable patterns emerged from its analysis:
 
-  4           85.7%             84.9%           82.9%          83.9%
+The model demonstrated strongest diagonal elements (true positives) for technical roles requiring specialized skills, with particularly high accuracy in software development, data science, and engineering positions. This suggests that roles requiring specific technical competencies present more distinctive feature signatures that facilitate accurate classification.
 
-  5           87.1%             85.6%           84.1%          84.8%
+Off-diagonal elements (misclassifications) typically occurred between semantically related job roles within the same domain. For example, the model occasionally confused "Data Scientist" with "Data Analyst" or "Machine Learning Engineer," but rarely with unrelated roles like "Financial Advisor" or "Marketing Manager." This pattern of errors indicates that while the model might sometimes misclassify within a professional domain, it generally maintains domain-level accuracy—still providing valuable guidance within a relevant career field.
 
-  **Mean**    86.3%             84.9%           83.5%          84.2%
+The confusion matrix also highlighted challenges in distinguishing certain roles with overlapping skill requirements but different titles. This represents the real-world ambiguity in job nomenclature where similar positions may carry different titles across organizations or industries. Notably, the model struggled more with emerging or hybrid roles that combine responsibilities from multiple traditional domains, such as roles at the intersection of marketing and data analysis.
 
-  **Std Dev** 0.55%             0.49%           0.47%          0.39%
-  ----------------------------------------------------------------------------
+## 4.2.3 Cross-Validation Results
 
-The model demonstrated varying performance across different job
-categories, with technical fields such as IT & Software Development
-(92.3% precision) and Data Science & Analytics (89.7% precision) showing
-the highest accuracy. This pattern suggests that technical roles may
-have more distinctive feature patterns that facilitate classification,
-possibly due to the more structured and specific nature of skills in
-these domains.
+To assess the model's stability and reliability, five-fold cross-validation was conducted, with each fold preserving the class distribution through stratified sampling. The cross-validation results demonstrated remarkable consistency across all five folds, as detailed in Table 4.3.
 
-### **Feature Importance Analysis.** Analysis of feature importance provided valuable insights into the factors that most significantly influence job role predictions. Technical skills consistently ranked among the most important features, with programming languages and technical frameworks such as Python, Java, and SQL demonstrating particularly high predictive power. The total years of experience emerged as the fourth most important feature, confirming its significant role in job role determination.
+| **Fold** | **Accuracy** | **Precision** | **Recall** | **F1-Score** |
+|----------|--------------|---------------|------------|--------------|
+| 1        | 85.9%        | 84.7%         | 83.2%      | 83.9%        |
+| 2        | 86.4%        | 85.1%         | 83.8%      | 84.4%        |
+| 3        | 86.2%        | 84.3%         | 83.5%      | 83.9%        |
+| 4        | 85.7%        | 84.9%         | 82.9%      | 83.9%        |
+| 5        | 87.1%        | 85.6%         | 84.1%      | 84.8%        |
+| **Mean** | 86.3%        | 84.9%         | 83.5%      | 84.2%        |
+| **Std Dev** | 0.55%     | 0.49%         | 0.47%      | 0.39%        |
 
-While education level was important, it ranked lower than specific
-technical skills, suggesting that in many fields, specialized skills may
-outweigh formal education credentials. Domain-specific skills such as
-machine learning and data analysis showed high predictive power for
-specialized roles, often surpassing general professional skills in
-importance.
+The notably low standard deviations across all metrics (≤0.55%) indicate excellent model stability, suggesting that the Random Forest classifier generalizes well across different data subsets rather than overfitting to particular training examples. This consistency is particularly important for an employment opportunity prediction system that must maintain reliable performance across diverse user profiles.
 
-SHAP (SHapley Additive exPlanations) analysis revealed complex
-interactions between features. For example, the combination of Python
-and machine learning skills demonstrated a synergistic effect that
-exceeded the sum of their individual contributions when predicting data
-scientist roles. This finding highlights the importance of skill
-complementarity in determining suitable job roles.
+The narrow performance range across folds (minimum accuracy: 85.7%, maximum: 87.1%) further confirms that the model's predictive capability is robust to variations in the training data, increasing confidence in its applicability to new, unseen profiles. This stability can be attributed to both the ensemble nature of Random Forest, which mitigates overfitting through averaging multiple decision trees, and the comprehensive hyperparameter optimization process that identified optimal settings for model complexity and generalization.
 
-[Figure 4.3 illustrates the relative importance of the top 15 features
-as determined by the Random Forest model.]{.mark}
+## 4.2.4 Feature Importance Analysis Results
 
-[\[Figure 4.3: Top 15 Features by Importance in Job Role
-Prediction\]]{.mark}
+The analysis of feature importance revealed significant insights into the factors that most substantially influence job role predictions. The Random Forest model's inherent capability to quantify feature contributions was leveraged to identify the relative importance of each predictor variable. Figure 4.3 illustrates the relative importance of the top 15 features as determined by the model.
 
-### **LLM Integration Results.** The integration of Large Language Models (LLMs) significantly enhanced the system's capabilities beyond what the Random Forest model could achieve alone. The hybrid approach combining Random Forest with LLM demonstrated improved performance across all metrics, with accuracy increasing by 3.4 percentage points to 89.7%, precision improving by 3.3 percentage points to 88.2%, and recall increasing by 4.4 percentage points to 87.9%.
+Among technical skills, programming languages and frameworks consistently emerged as the most influential predictors. Python ranked as the most important feature overall, followed by Java and SQL, demonstrating the critical role these technical competencies play in determining suitable job roles. This finding aligns with the increasing demand for programming skills across diverse professional domains beyond traditional software development.
 
-Table 4.4 presents a performance comparison between the standalone
-Random Forest model and the hybrid approach.
+Experience-related features also demonstrated substantial predictive power, with total years of experience ranking as the fourth most important feature. This confirms the significant role of professional tenure in determining appropriate job roles, reflecting the career progression patterns observed in the exploratory data analysis phase.
 
-  ----------------------------------------------------------------------------
-  **Metric**               **Random Forest    **Hybrid (RF + **Improvement**
-                           Only**             LLM)**         
-  ------------------------ ------------------ -------------- -----------------
-  Accuracy                 86.3%              89.7%          +3.4%
+While education level was an important feature, it ranked lower than many technical skills in the overall importance hierarchy. This suggests that in numerous fields, specialized skills may outweigh formal education credentials in determining suitable employment opportunities. This finding has significant implications for career development strategies, highlighting the potential value of focused skill acquisition as a complement or alternative to pursuing additional formal education.
 
-  Precision                84.9%              88.2%          +3.3%
+Domain-specific skills such as machine learning and data analysis showed high predictive power for specialized roles, often surpassing general professional skills in importance. This specialization effect was particularly pronounced in technical and analytical domains, where specific technical competencies strongly differentiate between roles.
 
-  Recall                   83.5%              87.9%          +4.4%
+The SHAP (SHapley Additive exPlanations) analysis further revealed complex interactions between features that weren't captured by individual importance scores alone. For instance, the combination of Python and machine learning skills demonstrated a synergistic effect, where their co-occurrence had greater predictive impact than the sum of their individual contributions when classifying data scientist roles. This finding highlights the importance of skill complementarity in determining suitable job roles and suggests that strategic skill combinations may be particularly valuable for career development.
 
-  F1-Score                 84.2%              88.1%          +3.9%
+## 4.2.5 Discussion of Random Forest Model Performance
 
-  Contextual Understanding Limited            High           Significant
+The 86.3% accuracy achieved by the Random Forest model represents strong performance for a challenging multi-class classification problem involving 639 distinct job categories. This performance level exceeds the accuracy typically reported in comparable studies of employment prediction, which often achieve 75-80% accuracy on simpler, more restricted job classification tasks with fewer categories.
 
-  Emerging Role            Poor               Good           Significant
-  Identification                                             
-  ----------------------------------------------------------------------------
+Several factors contributed to the model's effectiveness. First, the comprehensive preprocessing and feature engineering pipeline successfully transformed unstructured text data into meaningful numerical representations that captured the essential characteristics of education, skills, and experience. The ordinal encoding of education levels preserved their hierarchical relationships, while the binary representation of skills effectively captured their presence or absence in professional profiles.
 
-The LLM component demonstrated effectiveness in three key areas:
+Second, the stratified sampling approach ensured balanced representation of job categories during training and evaluation, preventing bias toward more common roles. This was particularly important given the relatively balanced distribution of job roles in the dataset, where even the most common roles represented less than 0.2% of the data.
 
-1.  **Contextual Understanding**: The LLM successfully interpreted
-    nuanced descriptions in resumes, correctly identifying relevant
-    skills and experience even when described using non-standard
-    terminology.
+Third, the hyperparameter optimization process identified settings that balanced model complexity with generalization capability. The selected configuration with 200 estimators provided sufficient ensemble diversity to capture complex patterns, while the controlled depth of 20 prevented overfitting to training data noise.
 
-2.  **Emerging Role Identification**: For newer job roles not
-    well-represented in the training data (e.g., "MLOps Engineer" or
-    "Sustainability Analyst"), the LLM-based approach showed a 76%
-    improvement in correct classification compared to the Random Forest
-    model alone.
+The varying performance across job categories reveals both strengths and limitations of the approach. The model excelled at predicting technical roles with well-defined skill requirements, achieving precision exceeding 90% for software development positions. This suggests that the feature engineering approach was particularly effective at capturing the distinctive characteristics of these roles.
 
-3.  **Skill Relationship Mapping**: The LLM effectively established
-    connections between related skills, recognizing that skills like
-    "TensorFlow" and "Keras" are related to "Deep Learning" even when
-    these relationships weren't explicitly defined in the training data.
+Conversely, the relatively lower performance for certain non-technical roles indicates challenges in distinguishing positions with more variable or less structured skill requirements. This limitation is inherent to classification approaches that rely primarily on binary skill indicators and quantitative experience metrics, which may not fully capture the nuanced requirements of roles dependent on soft skills or qualitative experience aspects.
 
-[Figure 4.4 visualizes how confidence scores from the Random Forest
-model were enhanced by LLM-based refinement for cases with initially low
-confidence.]{.mark}
+The confusion matrix analysis revealed that misclassifications typically occurred between semantically related job roles, suggesting that even when the model made errors, it generally identified roles within the appropriate professional domain. This "near-miss" pattern of errors means that even imperfect predictions likely provide valuable directional guidance to users.
 
-[\[Figure 4.4: Confidence Score Enhancement with LLM
-Integration\]]{.mark}
+## 4.2.6 Discussion of Feature Importance
+
+The feature importance analysis yields several significant insights with implications for both individual career planning and broader workforce development strategies. The dominance of programming languages and technical frameworks among the most important features reflects the growing technological integration across industries and the increasing value placed on digital literacy even in traditionally non-technical roles.
+
+The high importance of Python, Java, and SQL aligns with current labor market trends that show persistent demand for these foundational programming skills. Python's position as the most important predictor is particularly noteworthy and can be attributed to its versatility across multiple domains, including data analysis, web development, artificial intelligence, and scientific computing. This versatility makes Python proficiency a strong differentiator across numerous job categories, from data scientists to financial analysts.
+
+The substantial importance of total years of experience (ranked fourth) confirms the significant role of professional tenure in career progression. This finding reinforces the value of accumulated work experience in determining suitable job roles and suggests that experience remains a critical factor in employment decisions alongside specific skills. This relationship between experience and job roles aligns with the patterns observed in the exploratory data analysis, where senior positions consistently showed higher average years of experience.
+
+The relatively lower ranking of formal education compared to specific technical skills has significant implications for education and training strategies. This finding suggests that in many fields, targeted skill acquisition may yield greater returns for career advancement than pursuing additional academic credentials. However, it's important to note that this pattern varied across domains—in healthcare and research roles, education level retained high importance, reflecting the formal qualification requirements in these fields.
+
+The feature importance results also revealed interesting domain-specific patterns. For technical roles, hard skills like programming languages and technical frameworks were the primary differentiators. In contrast, for management positions, the combination of experience, leadership skills, and communication abilities carried greater weight. This domain-specific variation in important features aligns with the distinct skill clusters observed during exploratory analysis and reinforces the importance of targeted skill development strategies based on desired career paths.
+
+The SHAP analysis uncovered complex feature interactions that highlight the value of complementary skill combinations. The synergistic effect between Python and machine learning skills exemplifies how certain skill combinations create distinctive professional profiles that are strongly associated with specific roles. This finding supports the importance of strategic skill development that considers not just individual competencies but also their complementary relationships.
+
+These feature importance findings have practical implications for multiple stakeholders. For individual job seekers, they provide evidence-based guidance on which skills may yield the greatest returns for specific career objectives. For educational institutions, they highlight the importance of adapting curricula to emphasize high-impact skills and skill combinations. For employers, they offer insights into which combinations of qualifications and experiences most strongly signal suitability for particular roles.
+
 
 ## **Web Application for Employment Opportunity Prediction**
 
