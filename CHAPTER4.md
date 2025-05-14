@@ -10,171 +10,78 @@ experience evaluation.
 
 ## **Employment Trends and Skill Demands Through Data Preprocessing**
 
-To effectively identify employment trends and evolving skill demands,
-detailed data preprocessing steps were undertaken to ensure the
-consistency and quality of the professional profiles dataset. The
-research utilized the Professional Profiles dataset from Hugging Face, a
-comprehensive collection comprising 76,294 profiles. Each profile
-initially contained four primary data columns: education level, skills,
-experience, and current job role. An initial exploratory analysis of
-this raw data revealed a diverse landscape with 639 unique job roles and
-34 distinct skills distributed across the dataset.
+To effectively identify employment trends and evolving skill demands, a rigorous analysis of the professional profiles dataset was conducted. This involved initial data exploration, followed by comprehensive preprocessing and feature engineering steps. These processes were crucial for ensuring data quality, transforming raw data into a machine-learnable format, and uncovering underlying patterns in education, skills, experience, and job roles.
 
-A comprehensive preprocessing pipeline was subsequently implemented to
-transform this raw data into structured features suitable for machine
-learning analysis. The \'education level\' data underwent ordinal
-encoding to accurately capture the hierarchical nature of academic
-qualifications, with values assigned from 1 (High School) to 6
-(Professional Degree). This method preserved the inherent progression of
-educational attainment while converting categorical information into a
-numerical format. The \'skills\' column, originally consisting of
-comma-separated text values, was transformed into a set of binary
-features, where \'1\' indicated the presence and \'0\' the absence of
-each unique skill identified in the dataset. This vectorization approach
-enabled the model to learn the importance of specific skills. For the
-\'experience\' field, which contained unstructured text descriptions,
-several meaningful numerical features were extracted using text analysis
-techniques; these included total years of experience, a binary indicator
-for any prior experience, and the count of previous jobs mentioned.
-Finally, the target variable, \'current job role,\' was subjected to
-label encoding, transforming the 639 unique textual values into numeric
-indices essential for model training, while a mapping file was
-maintained to ensure the interpretability of the results.
+### **Dataset Overview and Initial Characteristics**
+The research utilized the Professional Profiles dataset from Hugging Face, a comprehensive collection comprising 76,294 profiles. Each profile initially contained four primary data columns: education level, skills, experience, and current job role. An initial exploratory analysis of this raw data revealed a diverse landscape with 639 unique job roles and 34 distinct skills distributed across the dataset. This initial overview underscored the complexity and richness of the data, necessitating detailed preprocessing to extract meaningful insights.
 
-### **Dataset Characteristics and Composition.** The study utilized the Professional Profiles dataset from Hugging Face, which provided a robust foundation for the analysis. 
+### **Data Preprocessing and Feature Engineering**
+A comprehensive preprocessing pipeline, including significant feature engineering, was implemented to transform the raw dataset into structured features suitable for machine learning analysis. This involved:
 
-### Education Distribution. **T**his dataset contained 76,294 profiles with four primary data columns: education level, skills, experience, and current job role. Initial exploratory analysis revealed 639 unique job roles and 34 distinct skills across the dataset. Analysis of education levels revealed that Bachelor\'s degrees were the most common (35.6%), followed by High School (23.7%) and Associate\'s degrees (18.7%). Advanced degrees like PhD were relatively rare (0.3%)
+*   **Education Processing**: The education column, containing categorical text values representing different educational levels, was processed using Ordinal Encoding. This technique was chosen to capture the inherent hierarchical order of educational qualifications, assigning a unique numerical code to each level that reflects academic progression. This transformation allowed the model to interpret the relative ranking of educational backgrounds. Table 4.1 summarizes the ordinal encoding scheme applied.
 
-![A graph of a number of people AI-generated content may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image5.png){width="4.255208880139983in"
-height="2.8399507874015746in"}
+    | **Education Level**                 | **Ordinal Code**                  |
+    |-----------------------------------|-----------------------------------|
+    | High School                       | 1                                 |
+    | Associate's                       | 2                                 |
+    | Bachelor's                        | 3                                 |
+    | MBA                               | 4                                 |
+    | Master's                          | 5                                 |
+    | Professional Degree               | 6                                 |
+    *Table 4.1: Ordinal Encoding Scheme for Education Levels*
 
-Experience Distribution. The distribution of professional experience
-demonstrated a right-skewed pattern, with the majority of individuals
-possessing between 0-10 years of experience. The calculated mean
-experience was 6.3 years with a standard deviation of 6.7 years,
-indicating considerable variability in professional tenure across the
-dataset. Analysis showed that 80.2% of entries had some experience, with
-an average of 1.3 previous jobs per individual.![A graph of a
-distribution of years AI-generated content may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image6.png){width="4.401042213473316in"
-height="2.9234733158355204in"}
+*   **Skills Processing**: The skills column, initially containing unstructured, comma-separated text values, underwent significant feature engineering. All unique skills present across the entire dataset were identified. Subsequently, binary features were created for each of these unique skills. For each data instance, the corresponding binary feature was set to 1 if the skill was mentioned in the skills text, and 0 otherwise. This approach transformed the free-text skill descriptions into a structured, numerical representation that allowed the model to assess the presence or absence of specific skills. A total of 34 distinct binary skill features were generated.
 
-Skill distribution. In terms of skills distribution, problem-solving
-(43.4%), time management (43.2%), and communication (43.2%) emerged as
-the three most prevalent skills in the dataset. The most common skills
-in the dataset were problem-solving, time management, and communication,
-each present in over 40% of the resumes. Technical skills like machine
-learning, programming, and data analysis were present in approximately
-15-16% of resumes.![A graph of skills distribution AI-generated content
-may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image3.png){width="4.197916666666667in"
-height="2.985411198600175in"}
+*   **Experience Processing**: The experience column, which contained unstructured text describing previous job roles and years of experience, also required feature engineering to extract quantifiable information. From this text, the following numerical features were extracted:
+    *   Total years of experience: Calculated by summing the years mentioned for all previous job roles.
+    *   Presence of experience: A binary feature indicating whether the individual had any mentioned work experience (1) or not (0).
+    *   Number of previous jobs: Counted based on the distinct job roles mentioned in the text.
+    These engineered features provided the model with structured numerical data representing the quantity and breadth of an individual's work history.
 
-Job Role Distribution. The dataset contained 639 unique job roles, with
-a relatively balanced distribution. The most common roles included
-Marine scientist, technical author, and Pathologist, each representing
-less than 0.2% of the dataset![A graph with text and numbers
-AI-generated content may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image1.png){width="3.901042213473316in"
-height="2.7878412073490813in"}
+*   **Job Role (Target Variable) Processing**: The job role column, serving as the target variable for classification and containing 639 unique text values, was encoded using a Label Encoder. This process assigned a unique numerical index to each distinct job role. A mapping file was generated and maintained to ensure that the numerical predictions from the model could be easily converted back to the original, interpretable job role text labels for reporting and application output.
 
-Education vs. Job Role. Analysis revealed strong relationships between
-education levels and job roles. For example, Professional Degrees were
-strongly associated with healthcare roles like Pathologist and Child
-psychotherapist, while PhDs were more common in research and academic
-positions.![A graph of different colored squares AI-generated content
-may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image2.png){width="4.867924321959755in"
-height="3.245087489063867in"}
+*   **Removal of Irrelevant or Unusable Data**: Following feature engineering, a further round of filtering was performed to ensure that only high-quality data was used for model development. Entries that still lacked essential features after preprocessing, such as those missing both education and skills, were removed. Outliers and anomalous records, such as profiles with implausibly high years of experience, were excluded. Irrelevant columns that did not contribute to the prediction task were also dropped. This step helped to maximize the integrity and relevance of the final dataset.
 
-Experience vs. Job Role. Years of experience varied significantly across
-job roles. Senior positions like Chief Financial Officer showed higher
-average years of experience, while entry-level positions had lower
-levels.
+### **Key Findings from Data Exploration and Preprocessing**
 
-![A graph with blue squares AI-generated content may be
-incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image8.png){width="3.7343755468066493in"
-height="2.6645800524934384in"}
+The preprocessing and exploratory analysis yielded several key findings regarding the composition of the dataset:
 
-Skills vs. Job Role. The heatmap analysis of skills across job roles
-revealed distinct skill patterns for different career paths. Technical
-roles showed higher prevalence of programming and data analysis skills,
-while management positions had higher rates of leadership and strategic
-planning skills.
+#### **Education Level Distribution**
+Analysis of education levels revealed that Bachelor's degrees were the most common qualification, present in 35.6% of profiles. This was followed by High School diplomas (23.7%) and Associate's degrees (18.7%). Advanced degrees such as PhDs were relatively rare, constituting only 0.3% of the dataset. This distribution suggests a broad representation of the workforce, with a significant portion holding undergraduate qualifications.
+![A graph of a number of people AI-generated content may be incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image5.png){width="4.255208880139983in" height="2.8399507874015746in"}
+*Figure: Education Level Distribution*
 
-### **Data Preprocessing and Feature Engineering.** A comprehensive preprocessing pipeline was implemented to transform the raw dataset into structured features suitable for machine learning analysis. The education data underwent ordinal encoding to capture the hierarchical nature of academic qualifications, with values ranging from 1 (High School) to 6 (Professional Degree). This approach preserved the inherent progression of educational attainment while converting categorical information into numerical values for model training.
+#### **Professional Experience Distribution**
+The distribution of professional experience demonstrated a right-skewed pattern, with the majority of individuals (approximately 80.2%) possessing between 0-10 years of experience. The calculated mean experience was 6.3 years with a standard deviation of 6.7 years, indicating considerable variability in professional tenure. On average, individuals had 1.3 previous jobs. This finding points to a dataset rich in early to mid-career professionals, with diverse experience trajectories.
+![A graph of a distribution of years AI-generated content may be incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image6.png){width="4.401042213473316in" height="2.9234733158355204in"}
+*Figure: Professional Experience Distribution*
 
-The skills column, originally containing comma-separated text values,
-was transformed into a set of binary features representing the presence
-(1) or absence (0) of each unique skill identified in the dataset. This
-vectorization approach allowed the model to learn the importance of
-specific skills for different job roles while maintaining a consistent
-feature space across all profiles.
+#### **Skill Landscape and Distribution**
+In terms of skills, problem-solving (43.4%), time management (43.2%), and communication (43.2%) emerged as the three most prevalent skills. This distribution underscores the pervasive demand for strong foundational soft skills across various professions, as each was present in over 40% of profiles. Concurrently, technical skills like machine learning, programming, and data analysis were present in approximately 15-16% of resumes, indicating specialized demand within particular segments. The identification and binarization of 34 distinct skills during preprocessing provided a granular view of the skill landscape, which was crucial for subsequent trend analysis and model training.
+![A graph of skills distribution AI-generated content may be incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image3.png){width="4.197916666666667in" height="2.985411198600175in"}
+*Figure: Skill Distribution*
 
-For the experience field, which contained unstructured text
-descriptions, several meaningful numerical features were extracted:
-total years of experience, a binary indicator for any experience, and
-the number of previous jobs mentioned. This extraction process employed
-text analysis techniques to identify temporal references and job titles
-within the narrative descriptions.
+#### **Job Role Distribution**
+The dataset contained 639 unique job roles, exhibiting a relatively balanced distribution where the most common individual roles (e.g., Marine scientist, technical author, Pathologist) each represented less than 0.2% of the dataset. This diversity in job roles provided a comprehensive basis for training a model capable of distinguishing between many different career paths.
+![A graph with text and numbers AI-generated content may be incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image1.png){width="3.901042213473316in" height="2.7878412073490813in"}
+*Figure: Job Role Distribution*
 
-The target variable (job role) underwent label encoding, transforming
-the 639 unique text values into numeric indices while maintaining a
-mapping file to preserve interpretability of the results. This
-preprocessing approach balanced the need for numerical representation
-required by machine learning algorithms with the preservation of
-semantic meaning necessary for result interpretation.
+### **Identified Relationships Between Features**
+The analysis of relationships between these processed features revealed significant patterns in the employment landscape:
 
-Table 4.1 summarizes the ordinal encoding scheme applied to education
-levels during preprocessing.
+*   **Education vs. Job Role**: Strong correlations were observed. For example, Professional Degrees were strongly associated with healthcare roles like Pathologist and Child psychotherapist, while PhDs were more common in research and academic positions. This aligns with specialized knowledge requirements in these fields.
+    ![A graph of different colored squares AI-generated content may be incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image2.png){width="4.867924321959755in" height="3.245087489063867in"}
+    *Figure: Education Level vs. Job Role Heatmap*
 
-  -----------------------------------------------------------------------
-  **Education Level**                 **Ordinal Code**
-  ----------------------------------- -----------------------------------
-  High School                         1
+*   **Experience vs. Job Role**: Years of experience varied significantly across job roles. Senior positions like Chief Financial Officer showed higher average years of experience, while entry-level positions had lower levels, underscoring the progressive nature of career advancement.
+    ![A graph with blue squares AI-generated content may be incorrect.](C:\Codes\nextjs-employment-opportunities\Chapter 4/media/image8.png){width="3.7343755468066493in" height="2.6645800524934384in"}
+    *Figure: Experience vs. Job Role Heatmap*
 
-  Associate's                         2
+*   **Skills vs. Job Role**: The heatmap analysis of skills across job roles (as depicted in Figure 4.2) revealed distinct skill patterns. Technical roles demonstrated a higher concentration of programming and data analysis skills, while management positions showed greater prevalence of leadership and strategic planning competencies.
+    [Figure 4.2 depicts the relationship between job roles and skill patterns, illustrating the distinct skill requirements across different career domains.]{.mark}
+    [\[Figure 4.2: Heatmap of Skills Distribution Across Job Categories\]]{.mark}
 
-  Bachelor's                          3
-
-  MBA                                 4
-
-  Master's                            5
-
-  Professional Degree                 6
-  -----------------------------------------------------------------------
-
-### **Relationships Between Features Findings.** The analysis of relationships between features revealed significant patterns in the employment landscape. A strong correlation was observed between education levels and specific job roles, with Professional Degrees strongly associated with healthcare positions such as Pathologist and Child Psychotherapist, while PhDs demonstrated a higher prevalence in research and academic positions. This finding aligns with specialized knowledge requirements in these fields and their corresponding formal qualification prerequisites.
-
-Years of experience exhibited notable variation across job roles, with
-senior positions such as Chief Financial Officer showing higher average
-years of experience compared to entry-level positions. This pattern
-underscores the progressive nature of career advancement in certain
-fields, where experiential knowledge accumulation correlates with higher
-organizational responsibility.
-
-The skills analysis revealed distinct patterns across different career
-paths. Technical roles demonstrated a higher concentration of
-programming and data analysis skills, while management positions showed
-greater prevalence of leadership and strategic planning competencies.
-This skills differentiation reflects the specialized knowledge domains
-required in various professional contexts and highlights the importance
-of targeted skill development for specific career trajectories.
-
-The data preprocessing phase thus revealed critical insights into
-employment trends: the hierarchical nature of educational requirements
-across professions, the importance of experience accumulation for senior
-positions, and the distinct skill clusters associated with different
-career domains. These findings provided essential context for the
-subsequent model development and evaluation phases.
-
-[Figure 4.2 depicts the relationship between job roles and skill
-patterns, illustrating the distinct skill requirements across different
-career domains.]{.mark}
-
-[\[Figure 4.2: Heatmap of Skills Distribution Across Job
-Categories\]]{.mark}
+The data preprocessing and feature engineering phase was thus instrumental in revealing critical insights into employment trends: the hierarchical nature of educational requirements, the importance of experience accumulation for senior positions, and the distinct skill clusters associated with different career domains. These findings provided an essential, data-driven foundation for the subsequent model development and evaluation phases.
 
 ## **Evaluation of Employment Opportunities Using Random Forest**
 
@@ -578,8 +485,8 @@ sets.
 
 Key achievements include: - Accurate skill extraction from multiple
 resume formats - High precision in job role recommendations (89.6%
-weighted average) - Effective integration of current job postings -
-Positive user experience ratings (4.4/5 overall satisfaction) -
+weighted average) - Effective integration of current job postings - 
+Positive user experience ratings (4.4/5 overall satisfaction) - 
 Successful handling of emerging job categories through LLM integration
 
 The hybrid approach combining traditional machine learning with LLMs
